@@ -1,37 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class KinematicEquations : MonoBehaviour {
+// Original article by Sebastian Lague: https://youtu.be/phMZQNu0ZFM
 
-	// Original article by Sebastian Lague: https://youtu.be/phMZQNu0ZFM
+public static class KinematicEquations {
 
-	//##################################################
-	//	STATIC REFERENCES
-	//##################################################
-	private static KinematicEquations _instance;
-
-
-	//##################################################
-	//	GETTERS AND SETTERS
-	//##################################################
-	public static KinematicEquations Instance {
-		get { return _instance; }
-	}
-
-
-	//##################################################
-	//	UNITY FUNCTIONS
-	//##################################################
-	// Use this for initialization
-	void Start () {
-		_instance = this;
-	}
-
-
-	//##################################################
-	//	ALVARO FUNCTIONS
-	//##################################################
 	/// <summary>
 	/// Returns the displacement given the initial velocity, the final velocity and the time.
 	/// </summary>
@@ -39,7 +13,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_initialVelocity">Initial velocity.</param>
 	/// <param name="i_finalVelocity">Final velocity.</param>
 	/// <param name="i_predictedTime">Predicted time.</param>
-	public float ReturnDisplacementUVT (float i_initialVelocity, float i_finalVelocity, float i_predictedTime) {
+	public static float ReturnDisplacementUVT (float i_initialVelocity, float i_finalVelocity, float i_predictedTime) {
 		float displacement = ((i_initialVelocity + i_finalVelocity) * 0.5f) * i_predictedTime;
 		return displacement;
 	}
@@ -51,7 +25,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_initialVelocity">Initial velocity.</param>
 	/// <param name="i_predictedTime">Predicted time.</param>
 	/// <param name="i_acceleration">Acceleration.</param>
-	public float ReturnDisplacementUTA (float i_initialVelocity, float i_predictedTime, float i_acceleration) {
+	public static float ReturnDisplacementUTA (float i_initialVelocity, float i_predictedTime, float i_acceleration) {
 		float displacement = (i_initialVelocity * i_predictedTime) + ((i_acceleration * i_predictedTime * i_predictedTime) * 0.5f);
 		return displacement;
 	}
@@ -63,7 +37,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_finalVelocity">Final velocity.</param>
 	/// <param name="i_predictedTime">Predicted time.</param>
 	/// <param name="i_acceleration">Acceleration.</param>
-	public float ReturnDisplacementVTA (float i_finalVelocity, float i_predictedTime, float i_acceleration) {
+	public static float ReturnDisplacementVTA (float i_finalVelocity, float i_predictedTime, float i_acceleration) {
 		float displacement = (i_finalVelocity * i_predictedTime) - ((i_acceleration * i_predictedTime * i_predictedTime) * 0.5f);
 		return displacement;
 	}
@@ -75,7 +49,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_initialVelocity">Initial velocity.</param>
 	/// <param name="i_acceleration">Acceleration.</param>
 	/// <param name="i_predictedTime">Predicted time.</param>
-	public float ReturnFinalVelocityUAT (float i_initialVelocity, float i_acceleration, float i_predictedTime) {
+	public static float ReturnFinalVelocityUAT (float i_initialVelocity, float i_acceleration, float i_predictedTime) {
 		float finalVelocity = i_initialVelocity + (i_acceleration * i_predictedTime);
 		return finalVelocity;
 	}
@@ -87,7 +61,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_initialVelocity">Initial velocity.</param>
 	/// <param name="i_acceleration">Acceleration.</param>
 	/// <param name="i_displacement">Displacement.</param>
-	public float ReturnFinalVelocityUAS (float i_initialVelocity, float i_acceleration, float i_displacement) {
+	public static float ReturnFinalVelocityUAS (float i_initialVelocity, float i_acceleration, float i_displacement) {
 		float finalVelocity = Mathf.Sqrt ((i_initialVelocity * i_initialVelocity) + (2 * i_acceleration * i_displacement));
 		return finalVelocity;
 	}
@@ -99,7 +73,7 @@ public class KinematicEquations : MonoBehaviour {
 	/// <param name="i_a">Parameter A</param>
 	/// <param name="i_b">Parameter B</param>
 	/// <param name="i_c">Parameter C</param>
-	public ArrayList QuadraticEquation (float i_a, float i_b, float i_c) {
+	public static ArrayList QuadraticEquation (float i_a, float i_b, float i_c) {
 		ArrayList array = new ArrayList (2);
 
 		float resultPos = (-i_b + Mathf.Sqrt ((i_b * i_b) - (4 * i_a * i_c))) / (2 * i_a);
@@ -108,8 +82,8 @@ public class KinematicEquations : MonoBehaviour {
 		array.Add (resultPos);
 		array.Add (resultNeg);
 
-		print ("QuadraticEquation > positive: " + resultPos);
-		print ("QuadraticEquation > negative: " + resultNeg);
+		Debug.Log ("QuadraticEquation > positive: " + resultPos);
+		Debug.Log ("QuadraticEquation > negative: " + resultNeg);
 
 		return array;
 	}
